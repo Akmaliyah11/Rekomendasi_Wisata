@@ -1,79 +1,141 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+  <x-slot name="header">
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+          {{ __('Dashboard') }}
+      </h2>
+  </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+  <div class="py-12">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+              <div class="p-6 text-gray-900">
+                  
+                  <title>Temukan Destinasi</title>
+                  <script src="https://cdn.tailwindcss.com"></script>
+                  
+                  <!-- FORM PILIH KATEGORI -->
+                  <section class="text-center py-12 px-4">
+                      <form method="GET" action="{{ route('dashboard') }}" class="mb-8">
+                          <h1 class="text-4xl font-bold mb-4">Temukan destinasi<br>sesuai minatmu!</h1>
+                          <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
+                              <select name="kategori" class="border border-gray-300 rounded px-4 py-2 w-64">
+                                  <option value="">-- Semua Kategori --</option>
+                                  <option value="pantai" {{ request('kategori') == 'pantai' ? 'selected' : '' }}>Pantai</option>
+                                  <option value="pegunungan" {{ request('kategori') == 'pegunungan' ? 'selected' : '' }}>Pegunungan</option>
+                                  <option value="taman" {{ request('kategori') == 'taman' ? 'selected' : '' }}>Taman Hiburan</option>
+                                  <option value="sejarah" {{ request('kategori') == 'sejarah' ? 'selected' : '' }}>Tempat Bersejarah</option>
+                                  <option value="airterjun" {{ request('kategori') == 'airterjun' ? 'selected' : '' }}>Air Terjun</option>
+                                  <option value="agrowisata" {{ request('kategori') == 'agrowisata' ? 'selected' : '' }}>Agrowisata</option>
+                                  <option value="religi" {{ request('kategori') == 'religi' ? 'selected' : '' }}>Religi</option>
+                              </select>
 
-                    <!-- Judul -->
-                    <h3 class="text-2xl font-bold text-pink-600 mb-6">Fitur Utama Sistem Rekomendasi Wisata</h3>
+                              <button type="submit" class="bg-gray-800 text-white px-6 py-2 rounded">Cari</button>
+                          </div>
+                      </form>
+                  </section>
+                  
+                  <!-- DESTINASI CARD -->
+                  <section class="bg-gray-100 py-10 px-6">
+                      <h2 class="text-center text-2xl font-semibold mb-8">Destinasi Unggulan</h2>
 
-                    <!-- Fitur 1: Pencarian berdasarkan kategori -->
-                    <div class="mb-8">
-                        <h4 class="text-lg font-semibold text-gray-800 mb-2">🔍 Cari Destinasi Berdasarkan Kategori</h4>
-                        <p class="text-gray-700 mb-2">Temukan tempat wisata sesuai minatmu: alam, budaya, kuliner, dan lainnya.</p>
-                        <select class="border border-gray-300 rounded p-2 w-full max-w-md">
-                            <option value="">Pilih Kategori</option>
-                            <option value="alam">Alam</option>
-                            <option value="budaya">Budaya</option>
-                            <option value="kuliner">Kuliner</option>
-                            <option value="belanja">Belanja</option>
-                        </select>
-                    </div>
+                      @php
+                          $destinasi = [
+                              [
+                                  'nama' => 'Pantai Alam Indah',
+                                  'kategori' => 'pantai',
+                                  'deskripsi' => 'Pantai populer di Tegal dengan pemandangan sunset.',
+                                  'rating' => 4.3,
+                                  'gambar' => 'https://blog.bookingtogo.com/wp-content/uploads/2023/05/Pai-tegal_11zon-scaled.jpg',
+                              ],
+                              [
+                                  'nama' => 'Waduk Cacaban',
+                                  'kategori' => 'pegunungan',
+                                  'deskripsi' => 'Waduk dengan suasana alam dan tempat makan terapung.',
+                                  'rating' => 4.0,
+                                  'gambar' => 'https://asset-2.tstatic.net/banyumas/foto/bank/images/Suasana-Waduk-Cacaban-Kecamatan-Kedungbanteng-Kabupaten-Tegal.jpg',
+                              ],
+                              [
+                                  'nama' => 'Guci Hot Water Boom',
+                                  'kategori' => 'pegunungan',
+                                  'deskripsi' => 'Pemandian air panas di kawasan Guci yang terkenal.',
+                                  'rating' => 4.5,
+                                  'gambar' => 'https://asset.kompas.com/crops/nkeCilcMIMmPcOKMsh_2tLY2wrM=/28x0:939x607/1200x800/data/photo/2024/08/27/66cdba6bd0865.jpg',
+                              ],
+                              [
+                                  'nama' => 'Rita Park',
+                                  'kategori' => 'taman',
+                                  'deskripsi' => 'Taman hiburan keluarga dengan berbagai wahana menarik.',
+                                  'rating' => 4.2,
+                                  'gambar' => 'https://asset-2.tstatic.net/travel/foto/bank/images/rita-park-tempat-wisata-ramah-keluarga-di-tegal.jpg',
+                              ],
+                              [
+                                  'nama' => 'Curug Cantel',
+                                  'kategori' => 'airterjun',
+                                  'deskripsi' => 'Air terjun tersembunyi dengan pemandangan asri.',
+                                  'rating' => 4.1,
+                                  'gambar' => 'https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/panturapost/2023/09/WhatsApp-Image-2023-09-17-at-13.55.02.jpeg',
+                              ],
+                              [
+                                  'nama' => 'Masjid Agung Tegal',
+                                  'kategori' => 'religi',
+                                  'deskripsi' => 'Masjid besar dan ikonik di tengah kota Tegal.',
+                                  'rating' => 4.6,
+                                  'gambar' => 'https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/133/2024/02/04/Masjid-Agung-Tegal-1218846499.jpg',
+                              ],
+                              [
+                                  'nama' => 'Masjid Agung Tegal',
+                                  'kategori' => 'religi',
+                                  'deskripsi' => 'Masjid besar dan ikonik di tengah kota Tegal.',
+                                  'rating' => 4.6,
+                                  'gambar' => 'https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2022/07/14/3342735898.jpg',
+                              ],
+                              // Tambahkan destinasi lain kalau mau
+                          ];
 
-                    <!-- Fitur 2: Rekomendasi destinasi -->
-                    <div class="mb-8">
-                        <h4 class="text-lg font-semibold text-gray-800 mb-2">⭐ Rekomendasi untuk Kamu</h4>
-                        <p class="text-gray-700 mb-4">Berikut beberapa tempat wisata yang sesuai dengan preferensimu:</p>
+                          $kategoriDipilih = request('kategori');
 
-                        <div class="flex overflow-x-auto gap-4 pb-4">
-                            <!-- Kartu Wisata -->
-                            @php
-                                $destinasi = [
-                                    ['nama' => 'Danau Senja', 'deskripsi' => 'Tempat sempurna untuk bersantai dengan alam.', 'img' => 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'],
-                                    ['nama' => 'Pegunungan Kristal', 'deskripsi' => 'Pemandangan menakjubkan dan udara sejuk di pegunungan.', 'img' => 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80'],
-                                    ['nama' => 'Pantai Tropis', 'deskripsi' => 'Kabut pagi menyelimuti hutan pinus, menciptakan suasana magis dan sejuk.', 'img' => 'https://images.unsplash.com/photo-1493558103817-58b2924bce98?auto=format&fit=crop&w=800&q=80'],
-                                ];
-                            @endphp
+                          if ($kategoriDipilih) {
+                              $destinasi = array_filter($destinasi, function($d) use ($kategoriDipilih) {
+                                  return $d['kategori'] == $kategoriDipilih;
+                              });
+                          }
+                      @endphp
 
-                            @foreach ($destinasi as $item)
-                            <div class="min-w-[250px] bg-white rounded-lg shadow-md overflow-hidden">
-                                <img src="{{ $item['img'] }}" alt="{{ $item['nama'] }}" class="w-full h-40 object-cover">
-                                <div class="p-4">
-                                    <h5 class="font-bold text-pink-600 text-lg">{{ $item['nama'] }}</h5>
-                                    <p class="text-sm text-gray-600 mb-2">{{ $item['deskripsi'] }}</p>
+                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          @forelse($destinasi as $d)
+                              <div class="card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="toggleUlasan(this)">
+                                  <img src="{{ $d['gambar'] }}" class="w-full h-48 object-cover" alt="{{ $d['nama'] }}">
+                                  <div class="p-4">
+                                      <h2 class="text-xl font-semibold mb-1">{{ $d['nama'] }}</h2>
+                                      <p class="text-gray-600 mb-1">{{ $d['deskripsi'] }}</p>
+                                      <p class="text-sm mb-1"><strong>Kategori:</strong> {{ ucfirst($d['kategori']) }}</p>
+                                      <p class="text-yellow-500 mb-2">Rating: ★★★★☆ ({{ $d['rating'] }})</p>
+                                      <div class="ulasan hidden">
+                                          <textarea class="w-full border rounded p-2 mb-2" placeholder="Tulis ulasan..."></textarea>
+                                          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Kirim</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          @empty
+                              <p class="text-center col-span-3">Tidak ada destinasi ditemukan.</p>
+                          @endforelse
+                      </div>
+                  </section>
 
-                                    <!-- Ulasan & Rating per kartu -->
-                                    <div class="text-sm text-gray-700 mb-2">
-                                        <div class="text-yellow-500 mb-1">★★★★☆</div>
-                                        <p class="text-xs text-gray-500 mb-2">“Sangat indah dan damai.”</p>
-                                        <textarea class="w-full border rounded p-1 text-xs mb-1" rows="2" placeholder="Tulis ulasan..."></textarea>
-                                        <div class="flex items-center gap-2 mb-2">
-                                            <label class="text-xs text-gray-600">Rating:</label>
-                                            <select class="border rounded p-1 text-xs">
-                                                <option value="5">5</option>
-                                                <option value="4">4</option>
-                                                <option value="3">3</option>
-                                                <option value="2">2</option>
-                                                <option value="1">1</option>
-                                            </select>
-                                        </div>
-                                        <button class="bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded text-xs">Kirim</button>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <!-- End Semua Fitur -->
-                </div>
-            </div>
-        </div>
-    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+      function toggleUlasan(card) {
+          let ulasanBox = card.querySelector('.ulasan');
+          if (ulasanBox.classList.contains('hidden')) {
+              ulasanBox.classList.remove('hidden');
+          } else {
+              ulasanBox.classList.add('hidden');
+          }
+      }
+  </script>
+
 </x-app-layout>
