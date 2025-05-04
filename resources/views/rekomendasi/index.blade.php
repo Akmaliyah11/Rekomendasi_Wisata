@@ -1,8 +1,7 @@
-<h2>Rekomendasi Untukmu</h2>
-@foreach($destinations as $destination)
-    <div>
-        <h3>{{ $destination->name }}</h3>
-        <p>{{ $destination->description }}</p>
-        <p>Kategori: {{ $destination->category->name }}</p>
-    </div>
-@endforeach
+<form action="{{ route('favorit.store') }}" method="POST" class="mt-4">
+    @csrf
+    <input type="hidden" name="destinasi_id" value="{{ $d['data']->id }}">
+    <button type="submit" class="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+        ❤️ Simpan ke Favorit
+    </button>
+</form>

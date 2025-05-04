@@ -9,15 +9,21 @@ class Review extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'destinasi_id', 'rating', 'komentar', 'sentimen'];
+    protected $fillable = [
+        'destination_id', 'user_id', 'komentar', 'rating'
+    ];
 
+    // Relasi dengan model Destination
+    public function destination()
+    {
+        return $this->belongsTo(Destination::class);
+    }
+
+    // Relasi dengan model User
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    public function destination()
-    {
-        return $this->belongsTo(Destination::class, 'destinasi_id');
-    }
 }
+
+

@@ -4,21 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Destination;
+
 
 class Destination extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'lokasi', 'deskripsi', 'kategori_id', 'fasilitas', 'rating_rata2'];
+    protected $fillable = ['nama', 'lokasi', 'deskripsi', 'kategori_id', 'fasilitas', 'rating_rata2', 'image'];
 
     protected $casts = [
         'fasilitas' => 'array',
     ];
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'kategori_id');
-    }
+    public function kategori()
+{
+    return $this->belongsTo(Category::class, 'kategori_id');
+}
+
 
     public function reviews()
     {

@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('front/assets/media/user/logowebwisata.jpg') }}" alt="Logo" class="block h-9 w-auto" />
+                        <img src="{{ asset('front/assets/media/user/TRAVELKITAA.png') }}" alt="Logo" class="block h-10 sm:h-12 md:h-16 lg:h-20 w-auto" />
                     </a>
                 </div>
 
@@ -17,15 +17,28 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('wisata')" :active="request()->routeIs('wisata')">
-                        {{ __('Wisata') }}
+
+                    <x-nav-link :href="route('datawisata.index')" :active="request()->routeIs('datawisata.index')">
+                        {{ __('Data Wisata') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('user-preferences.create')" :active="request()->routeIs('user-preferences.create')">
+                        {{ __('Preferensi') }}
+                    </x-nav-link>
+                    
+                    <x-nav-link :href="route('recommendations')" :active="request()->routeIs('recommendations')">
+                        {{ __('Rekomendasi') }}
+                    </x-nav-link>
+
+                    
                     <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
                         {{ __('About') }}
                     </x-nav-link>
+                    
                 </div>
             </div>
 

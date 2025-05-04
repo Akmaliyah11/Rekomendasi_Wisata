@@ -3,21 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Destination; // Pastikan model Destination sudah ada
+use App\Models\Destination;
 
 class DashboardController extends Controller
 {
-    //
     public function index(Request $request)
 {
-    $query = Destination::query();
+    $kategoriDipilih = $request->input('kategori');
 
-    if ($request->has('kategori') && $request->kategori != '') {
-        $query->where('kategori', $request->kategori);
+    // Ambil destinasi dengan relasi kategori dan reviews
+    $destinasi = Destination::with(['kategori', 'reviews.user']);  // Tambahkan 'reviews.user'
+
+    // Jika kategori difilter
+    if ($kategoriDipilih) {
+        $destinasi->whereHas('kategori', function ($query) use ($kategoriDipilih) {
+            $query->where('nama', $kategoriDipilih);
+        });
     }
 
-    $destinasi = $query->get();
+    $destinasi = $destinasi->get();
 
+    // Kirim ke view dashboard
     return view('dashboard', compact('destinasi'));
 }
 

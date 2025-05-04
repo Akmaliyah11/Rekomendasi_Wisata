@@ -6,31 +6,28 @@ use App\Models\Review;
 use App\Models\Destination;
 use Illuminate\Http\Request;
 
-class ReviewController extends Controller
-{
-    // Tambah review baru
-    public function store(Request $request)
+
+    class ReviewController extends Controller
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'destinasi_id' => 'required|exists:destinations,id',
-            'rating' => 'required|numeric|min:1|max:5',
-            'review' => 'required|string',
-        ]);
+        public function store(Request $request)
+        {
+            // Validasi input form ulasan
+            $request->validate([
+                'destinasi_id' => 'required|exists:destinations,id',
+                'isi' => 'required|string',
+            ]);
+    
+            // Menyimpan ulasan ke dalam database
+            $review = new Review();
+            $review->destinasi_id = $request->destinasi_id;
 
-        Review::create($request->all());
-
-        // Update rata-rata rating di tabel destinasi
-        $avgRating = Review::where('destinasi_id', $request->destinasi_id)->avg('rating');
-        Destination::where('id', $request->destinasi_id)->update(['rating_rata2' => $avgRating]);
-
-        return response()->json(['message' => 'Review berhasil ditambahkan']);
+            $review->user_id = auth()->id(); // Pastikan user sudah login
+            $review->komentar = $request->isi;
+            $review->rating = 5; // Atau dapat diubah sesuai input rating dari form jika ada
+            $review->save();
+    
+            return redirect()->back()->with('success', 'Ulasan berhasil dikirim!');
+        }
     }
+    
 
-    // (Opsional) Tampilkan review untuk satu destinasi
-    public function showByDestination($destinasi_id)
-    {
-        $reviews = Review::where('destinasi_id', $destinasi_id)->with('user')->get();
-        return response()->json($reviews);
-    }
-}
