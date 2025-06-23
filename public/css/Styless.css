@@ -1,0 +1,224 @@
+/* Body */
+body {
+    background-image: url(Image/BG_Dark.jpg); /* Gambar untuk mode gelap */
+    background-size: cover; /* Menutupi seluruh layar */
+    background-attachment: fixed; /* Latar belakang tetap saat scrolling */
+    background-position: center; /* Menyelaraskan latar belakang di tengah */
+    font-family: 'Lora', serif; /* Menggunakan font Lora untuk seluruh body */
+    color: #ffffff; /* Warna teks putih untuk mode gelap */
+    margin: 50;
+    padding: 20px;  
+    transition: background-color 2s ease, color 2s ease; /* Transisi smooth untuk warna */
+}
+body.light-mode {
+    background-image: url(Image/BG_Light.jpg); /* Gambar untuk mode terang */
+    background-size: cover; /* Menutupi seluruh layar */
+    background-attachment: fixed; /* Latar belakang tetap saat scrolling */
+    background-position: center; /* Menyelaraskan latar belakang di tengah */
+    font-family: 'Lora', serif; /* Menggunakan font Lora untuk seluruh body */
+    color: #121212; /* Warna teks hitam untuk mode terang */
+    margin: 50;
+    padding: 20px;  
+    transition: background-color 2s ease, color 2s ease; /* Transisi smooth untuk warna */
+}
+
+/* Header Umum */
+header {
+    width: 100%;
+    background-color: white; /* bisa diubah ke warna lain */
+    padding: 16px 24px; /* padding atas-bawah 16px, kiri-kanan 24px */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* bayangan tipis */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+}
+
+/* Logo */
+/* Style untuk logo */
+.logo {
+    display: block;
+    display: flex;
+    align-items: center;     /* Vertikal sejajar */
+    gap: 8px;                /* Jarak antara logo dan teks */
+    text-decoration: none;   /* Hilangkan garis bawah */
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #000000; /* Ganti sesuai tema, misalnya #000 untuk light mode */
+}
+.logo-link {
+    display: inline-flex;         /* Penting: agar sejajar horizontal */
+    align-items: center;          /* Vertikal rata tengah */
+    text-decoration: none;        /* Hilangkan garis bawah */
+    gap: 8px;                     /* Jarak antara logo dan teks */
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+}
+
+
+/* Jika ingin dark mode punya logo beda, bisa buat begini */
+.dark .logo {
+    background-image: url('/images/logo-dark.png'); /* Logo versi dark mode */
+}
+
+
+/* Navigation Menu */
+header nav {
+    display: flex;
+    gap: 16px; /* jarak antar link */
+}
+
+/* Link di Header */
+header nav a {
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 0.875rem; /* text-sm */
+    text-decoration: none;
+    color: #1b1b18;
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect Link */
+header nav a:hover {
+    border-color: #19140035;
+}
+
+/* Dark Mode Support */
+body.dark header .logo,
+body.dark header nav a {
+    color: #EDEDEC;
+}
+
+body.dark header nav a:hover {
+    border-color: #3E3E3A;
+}
+
+/* Kotak Judul */
+body.dark-mode .title-box {
+    background-color: rgba(34, 34, 34, 0.5); /* Warna latar belakang gelap */
+    border: 1px solid #f0f8ff; /* Border putih */
+    color: #f0f8ff; /* Warna teks putih */
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow ringan */
+    text-align: center;
+    margin-bottom: 2em;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transisi mulus antar tema */
+}
+body.light-mode .title-box {    
+    background-color: rgba(0, 21, 255, 0.5); /* Warna latar belakang card untuk mode terang */
+    border: 1px solid #121212; /* Border hitam */
+    color: #121212; /* Warna teks hitam */
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow ringan */
+    text-align: center;
+    margin-bottom: 2em;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transisi mulus antar tema */
+}
+
+/* Judul dan Subjudul */
+body.dark-mode h1.title, 
+body.dark-mode h6.subtitle {
+    font-family: 'Lora', serif; /* Tetap menggunakan font Lora */
+    font-weight: 550; /* Membuat teks menjadi bold */
+    color: #f0f8ff; /* Warna teks putih untuk kontras dengan latar gelap */
+    animation: fadeIn 2s ease-in-out; /* Efek animasi fade-in */
+    margin: 2px; /* Menghapus margin default */
+    line-height: 1.5; /* Menentukan jarak antar baris (1.5 kali ukuran font) */
+}
+body.light-mode h1.title, 
+body.light-mode h6.subtitle {
+    font-family: 'Lora', serif; /* Tetap menggunakan font Lora */
+    font-weight: 550; /* Membuat teks menjadi bold */
+    color: #121212; /* Warna teks hitam untuk kontras dengan latar terang */
+    animation: fadeIn 2s ease-in-out; /* Efek animasi fade-in */
+    margin: 2px; /* Menghapus margin default */
+    line-height: 1.5; /* Menentukan jarak antar baris (1.5 kali ukuran font) */
+}
+
+/* Default Styling <hr> (Garis Bawah Judul) */
+body.dark-mode hr {
+    border: 0; /* Menghapus border bawaan */
+    height: 0; /* Menghilangkan tinggi default */
+    margin: 1em 0; /* Jarak vertikal garis */
+    animation: slideIn 1.5s ease-out; /* Animasi slide-in */
+    border-top: 2.5px solid #f0f8ff; /* Warna terang (putih kebiruan) */
+}
+body.light-mode hr {
+    border: 0; /* Menghapus border bawaan */
+    height: 0; /* Menghilangkan tinggi default */
+    margin: 1em 0; /* Jarak vertikal garis */
+    animation: slideIn 1.5s ease-out; /* Animasi slide-in */
+    border-top: 2.5px solid #121212; /* Warna gelap (hitam keabuan) */
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Agar header berada di atas elemen lainnya */
+    background-color: #fff; /* Warna latar belakang header, sesuaikan dengan kebutuhan */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Opsional: Menambahkan bayangan agar lebih menonjol */
+    padding: 1rem; /* Memberikan sedikit ruang di dalam header */
+    box-sizing: border-box; /* Agar padding tidak mempengaruhi lebar elemen */
+}
+
+
+
+
+/* Keyframes untuk animasi */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.fade-in {
+    animation: fadeIn 1.5s ease-in-out; /* Memperpanjang durasi untuk transisi yang lebih jelas */
+}
+/* Animasi Keyframes untuk Slide-in */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%); /* Mulai dari luar layar di kiri */
+        opacity: 0; /* Tidak terlihat */
+    }
+    to {
+        transform: translateX(0); /* Masuk ke posisi awal */
+        opacity: 1; /* Sepenuhnya terlihat */
+    }
+}
+/* Responsif pada Mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    .card {
+        max-width: 100%;
+    }
+}
+
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}

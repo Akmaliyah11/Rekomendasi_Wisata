@@ -8,36 +8,55 @@ use App\Models\Favorite;
 class FavoriteController extends Controller
 {
     // Konstruktor untuk middleware auth
-    public function __construct()
-    {
-        $this->middleware('auth'); // Pastikan user sudah login
-    }
+    public function index()
+{
+    $user = Auth::user();
+    $favorites = Favorite::with('destinasi')
+        ->where('user_id', $user->id)
+        ->get();
 
-    public function store(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'destinasi_id' => 'required|exists:destinations,id', // Pastikan destinasi_id ada di tabel destinations
+    return view('favorit.index', compact('favorites'));
+}
+
+public function store(Request $request)
+{
+    $request->validate([
+        'destinasi_id' => 'required|exists:destinations,id',
+    ]);
+
+    $user = Auth::user();
+
+    $exists = Favorite::where('user_id', $user->id)
+                      ->where('destinasi_id', $request->destinasi_id)
+                      ->exists();
+
+    if (! $exists) {
+        Favorite::create([
+            'user_id' => $user->id,
+            'destinasi_id' => $request->destinasi_id,
         ]);
 
-        $user = Auth::user(); // Mendapatkan user yang sedang login
-
-        // Cek apakah destinasi sudah ada di daftar favorit
-        $exists = Favorite::where('user_id', $user->id)
-            ->where('destinasi_id', $request->destinasi_id)
-            ->exists();
-
-        if (!$exists) {
-            // Jika belum ada, simpan ke favorit
-            Favorite::create([
-                'user_id' => $user->id,
-                'destinasi_id' => $request->destinasi_id,
-            ]);
-
-            return back()->with('success', 'Destinasi berhasil ditambahkan ke favorit!');
-        } else {
-            return back()->with('error', 'Destinasi sudah ada di daftar favorit!');
-        }
+        return redirect()->route('favorit.index')
+                         ->with('success', 'Destinasi berhasil ditambahkan!');
     }
+
+    return redirect()->route('favorit.index')
+                     ->with('error', 'Destinasi sudah ada di favorit.');
+}
+public function destroy($id)
+{
+    $favorit = Favorite::findOrFail($id);
+
+    // Opsional: cek apakah favorit ini milik user yang login
+    if ($favorit->user_id != auth()->id()) {
+        return redirect()->back()->with('error', 'Akses ditolak.');
+    }
+
+    $favorit->delete();
+
+    return redirect()->back()->with('success', 'Destinasi dihapus dari favorit.');
+}
+
+
 }
 ?>

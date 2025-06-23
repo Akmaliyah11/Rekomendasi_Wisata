@@ -9,20 +9,26 @@ class UserPreference extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'kategori_id', 'destinasi_id', 'rating'];
+    protected $fillable = [
+        'user_id',
+        'kategori_id',
+        'destinasi_id',
+        'rating',
+    ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function destination()
-    {
-        return $this->belongsTo(Destination::class, 'destinasi_id');
-    }
-
     public function category()
     {
         return $this->belongsTo(Category::class, 'kategori_id');
     }
+
+    public function destination()
+    {
+        return $this->belongsTo(Destination::class, 'destinasi_id');
+    }
 }
+

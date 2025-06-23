@@ -4,14 +4,14 @@
 <section class="preferensi">
     <div class="container">
         <h2>Preferensi Wisatamu</h2>
-        <form action="{{ route('user.preferensi.simpan') }}" method="POST">
+        <form action="{{ route('user-preferences.store') }}" method="POST">
             @csrf
 
             <label for="kategori_id">Pilih Kategori Favorit:</label>
             <select name="kategori_id" id="kategori_id" class="form-control" required>
                 @foreach ($kategori as $k)
                     <option value="{{ $k->id }}">{{ $k->nama }}</option>
-                @endforeach
+                @endcforeach
             </select>
 
             <label for="rating">Seberapa kamu suka kategori ini? (1 - 5)</label>

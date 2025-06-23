@@ -37,5 +37,15 @@ class Destination extends Model
     {
         return $this->hasMany(Recommendation::class, 'destinasi_id');
     }
+    public function getFasilitasArrayAttribute()
+{
+    if (is_array($this->fasilitas)) {
+        return $this->fasilitas;
+    }
+
+    return explode(',', $this->fasilitas);
+}
+
+
 }
 

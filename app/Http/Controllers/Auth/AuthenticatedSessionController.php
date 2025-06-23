@@ -28,7 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home', absolute: false));
+        $user = Auth::user();
+        if ($user->role === 'admin') {
+            return redirect()->intended(route('datawisata.dashboard', absolute: false));
+        } else {
+            return redirect()->intended(route('home', absolute: false));
+        }
     }
 
     /**
@@ -45,3 +50,4 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 }
+

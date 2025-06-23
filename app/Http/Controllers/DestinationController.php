@@ -17,4 +17,11 @@ class DestinationController extends Controller
 
         return view('wisata.show', compact('d'));
     }
+   // di DestinationController.php
+public function index()
+{
+    return view('admin.destinations.index'); // Buat view ini kalau belum ada
+}
+
+
 }

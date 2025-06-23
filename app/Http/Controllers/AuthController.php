@@ -8,37 +8,36 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    // Login Admin
-    public function loginAdmin(Request $request)
+    // Setelah login
+    protected function authenticated(Request $request, $user)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (Auth::attempt($credentials) && Auth::user()->role == 'admin') {
-            return redirect()->route('admin.dashboard');
+        if ($user->role === 'admin') {
+            return redirect('/admin/datawisata');
+        } else {
+            return redirect('/home');
         }
-
-        return back()->withErrors([
-            'email' => 'Kredensial salah atau Anda tidak memiliki akses admin.',
-        ]);
     }
 
-    // Login User
-    public function loginUser(Request $request)
+    public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials) && Auth::user()->role == 'user') {
-            return redirect()->route('user.dashboard');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->route('datawisata.dashboard');
+            } else {
+                return redirect()->route('home');
+            }
         }
 
         return back()->withErrors([
-            'email' => 'Kredensial salah atau Anda tidak memiliki akses user.',
+            'email' => 'Email atau password salah.',
         ]);
     }
 
@@ -49,3 +48,4 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 }
+

@@ -8,4 +8,9 @@ class Favorite extends Model
 {
     protected $fillable = ['user_id', 'destinasi_id'];
 
+    public function destinasi()
+{
+    return $this->belongsTo(Destination::class, 'destinasi_id');
+}
+
 }
